@@ -1,4 +1,4 @@
-package com.fo0.downloader.controller;
+package com.fo0.twitchbot.controller;
 
 import com.fo0.twitchbot.config.Config;
 import com.fo0.twitchbot.utils.Logger;

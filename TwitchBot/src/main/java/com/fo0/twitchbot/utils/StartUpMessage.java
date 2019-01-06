@@ -2,7 +2,7 @@ package com.fo0.twitchbot.utils;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.fo0.downloader.controller.Controller;
+import com.fo0.twitchbot.controller.Controller;
 
 public class StartUpMessage {
 

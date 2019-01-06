@@ -1,6 +1,6 @@
 package com.fo0.twitchbot.config;
 
-import com.fo0.downloader.controller.Controller;
+import com.fo0.twitchbot.controller.Controller;
 import com.fo0.twitchbot.utils.Logger;
 
 public class Configuration {

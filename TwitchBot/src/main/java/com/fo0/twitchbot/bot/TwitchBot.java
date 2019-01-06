@@ -1,4 +1,4 @@
-package com.fo0.twitchbot.main;
+package com.fo0.twitchbot.bot;
 
 import org.jibble.pircbot.PircBot;
 

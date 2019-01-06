@@ -1,6 +1,6 @@
 package com.fo0.twitchbot.main;
 
-import com.fo0.downloader.controller.Controller;
+import com.fo0.twitchbot.controller.Controller;
 
 public class Main {
 

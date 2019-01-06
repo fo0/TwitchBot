@@ -4,8 +4,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.BeforeClass;
 
-import com.fo0.twitchbot.main.OAuthFromFile;
-import com.fo0.twitchbot.main.TwitchBot;
+import com.fo0.twitchbot.bot.TwitchBot;
+import com.fo0.twitchbot.utils.OAuthFromFile;
 
 public class ConnectTest {
 

@@ -2,7 +2,7 @@ package com.fo0.twitchbot.config;
 
 import java.util.Collections;
 
-import com.fo0.downloader.controller.Controller;
+import com.fo0.twitchbot.controller.Controller;
 import com.fo0.twitchbot.utils.CONSTANTS;
 import com.fo0.twitchbot.utils.Logger;
 import com.google.devtools.common.options.OptionsParser;

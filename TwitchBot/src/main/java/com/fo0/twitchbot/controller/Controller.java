@@ -1,7 +1,10 @@
 package com.fo0.twitchbot.controller;
 
 import com.fo0.twitchbot.config.Config;
+import com.fo0.twitchbot.config.Configuration;
+import com.fo0.twitchbot.model.TwitchBotConfig;
 import com.fo0.twitchbot.utils.Logger;
+import com.fo0.twitchbot.utils.OAuthFromFile;
 import com.fo0.twitchbot.utils.StartUpMessage;
 
 public class Controller {
@@ -17,9 +20,24 @@ public class Controller {
 
 		StartUpMessage.message();
 
+		Configuration.init();
+
 		modules();
+
+		addDefaults();
 	}
 
 	public static void modules() {
+		ControllerTwitchBot.init();
+	}
+
+	public static void addDefaults() {
+		ControllerTwitchBot.addBot(
+				TwitchBotConfig.builder()
+				.id("fo0mebot")
+				.name("fo0mebot")
+				.oauth(OAuthFromFile.getKey())
+				.channel("fo0me")
+				.build());
 	}
 }

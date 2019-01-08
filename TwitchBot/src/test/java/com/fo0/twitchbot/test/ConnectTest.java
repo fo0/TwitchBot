@@ -23,12 +23,12 @@ public class ConnectTest {
 		TwitchBot bot = new TwitchBot(name, channel, oAuth);
 		bot.connectToTwitch();
 		bot.addCapabilities();
-		bot.joinChannelFo0Me();
+		bot.joinChannel();
 		bot.sendTestMessage();
-		bot.leaveChannelFo0Me();
-		
+		bot.leaveChannel();
+
 		try {
-			TimeUnit.SECONDS.sleep(1);
+			TimeUnit.SECONDS.sleep(2);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

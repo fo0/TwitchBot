@@ -7,10 +7,10 @@ public class Configuration {
 
 	private static final String[] args = Controller.arg;
 
-	public static void bootstrap() {
+	public static void init() {
 		Logger.debug("starting configuration");
 
-		ConfigParser.parseConfig(args);
+		Controller.config = ConfigParser.parseConfig(args);
 
 		ConfigParser.applyConfig();
 	}

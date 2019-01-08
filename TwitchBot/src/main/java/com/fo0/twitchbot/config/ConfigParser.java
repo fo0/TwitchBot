@@ -21,7 +21,7 @@ public class ConfigParser {
 
 	public static void printUsage(OptionsParser parser) {
 		System.out.println();
-		Logger.info("Usage: java -jar downloader.jar <OPTIONS>");
+		Logger.info("Usage: java -jar twitchbot.jar <OPTIONS>");
 		Logger.info(parser.describeOptions(Collections.<String, String>emptyMap(), OptionsParser.HelpVerbosity.LONG));
 		System.out.println();
 	}

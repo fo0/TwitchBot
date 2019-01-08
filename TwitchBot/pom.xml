@@ -67,6 +67,13 @@
 			<artifactId>pircbot</artifactId>
 			<version>1.5.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.kitteh.irc/client-lib -->
+		<dependency>
+			<groupId>org.kitteh.irc</groupId>
+			<artifactId>client-lib</artifactId>
+			<version>5.0.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

@@ -5,7 +5,7 @@ import com.fo0.twitchbot.utils.Logger;
 
 public class ActionHandler {
 
-	public ActionHandler(TwitchBotAction action, TwitchBot bot) {
+	public static void handle(TwitchBotAction action, TwitchBot bot) {
 		switch (action.getAction()) {
 		case "Message":
 			bot.sendMessageToChannel(action.getValue());

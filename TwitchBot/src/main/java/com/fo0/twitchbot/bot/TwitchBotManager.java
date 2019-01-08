@@ -48,6 +48,8 @@ public class TwitchBotManager {
 		Utils.sleep(TimeUnit.SECONDS, 2);
 
 		startUpMessage();
+
+		bot.addDefaultChannel();
 	}
 
 	public void stop() {
@@ -62,7 +64,7 @@ public class TwitchBotManager {
 
 	private void addChatListener() {
 		bot.addChatListener(e -> {
-			new ChatCommandHandler(e.toLowerCase(), this);
+			ChatCommandHandler.handle(e, this);
 		});
 	}
 
@@ -76,12 +78,13 @@ public class TwitchBotManager {
 	}
 
 	private void startActionListener() {
+		Logger.debug("starting action listener for: " + config.info());
 		actionListener.execute(() -> {
 			while (true) {
 				try {
+					Logger.debug("Waiting for action: " + config.info());
 					TwitchBotAction action = actionQueue.take();
-
-					ActionHandler ah = new ActionHandler(action, bot);
+					ActionHandler.handle(action, bot);
 				} catch (Exception e) {
 					Logger.error("Failed to take action from queue, exiting...");
 					System.exit(0);

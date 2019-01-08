@@ -26,4 +26,8 @@ public class TwitchBotConfig implements Serializable {
 	@Builder.Default
 	private boolean allowChatCommands = true;
 
+	public String info() {
+		return String.format("%s [%s]", name, id);
+	}
+
 }

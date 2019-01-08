@@ -23,7 +23,7 @@ public class ConnectTest {
 		TwitchBot bot = new TwitchBot(name, channel, oAuth);
 		bot.connectToTwitch();
 		bot.addCapabilities();
-		bot.joinChannel();
+		bot.addDefaultChannel();
 		bot.sendTestMessage();
 		bot.leaveChannel();
 

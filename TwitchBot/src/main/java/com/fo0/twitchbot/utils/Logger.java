@@ -17,6 +17,12 @@ public class Logger {
 		}
 	}
 
+	public static void trace(String msg) {
+		if (CONSTANTS.TRACE) {
+			System.out.println(timestamp() + " [TRACE] " + msg);
+		}
+	}
+
 	public static void error(String msg) {
 		System.err.println(timestamp() + " [ERROR] " + msg);
 	}

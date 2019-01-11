@@ -13,7 +13,7 @@ public class CommandlineApi {
 	}
 
 	private void init() {
-		reader = new CommandLineReader(new CommandLineActions());
+		reader = new CommandLineReader(new CommandLineActions(reader));
 	}
 
 	public void start() {

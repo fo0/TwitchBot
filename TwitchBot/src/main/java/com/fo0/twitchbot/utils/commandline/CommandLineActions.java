@@ -14,10 +14,47 @@ import com.google.common.collect.Lists;
 public class CommandLineActions implements Consumer<String> {
 
 	private static final List<String> COMMANDS = Lists.newArrayList("help", "reload-templates",
-			"commandline-api-restart", "commandline-api-stop");
+			"commandline-api-restart", "commandline-api-stop", "default", "privatemessage");
+
+	private CommandLineReader reader;
+
+	private String privateMessage_target_username;
+
+	private ECommandLineMode mode = ECommandLineMode.Default;
+
+	public CommandLineActions(CommandLineReader reader) {
+		this.reader = reader;
+	}
 
 	@Override
 	public void accept(String t) {
+		if (StringUtils.isBlank(t)) {
+			Logger.trace("IGNORE: blank commandline api input");
+			return;
+		}
+
+		if (mode == ECommandLineMode.PrivateMessage) {
+			// detect mode change
+			if (StringUtils.equals(t, ECommandLineMode.Default.name())) {
+				print("Switch to Mode: Default");
+				mode = ECommandLineMode.Default;
+				return;
+			}
+
+			// handle private messages
+			// add target user name
+			if (StringUtils.isBlank(privateMessage_target_username)) {
+				privateMessage_target_username = t;
+				print("All Text below sends to user: " + privateMessage_target_username);
+				print("You can stop the mode and change back to mode: default with the input \"Default\"");
+				return;
+			}
+
+			// TODO: access bot and send message
+			System.out.println("### SENDING MESSAGE TO USER: " + privateMessage_target_username + " --> " + t);
+			return;
+		}
+
 		switch (t) {
 		case "help":
 			print("Current Commands are: " + StringUtils.join(COMMANDS, ", "));
@@ -39,8 +76,20 @@ public class CommandLineActions implements Consumer<String> {
 			Controller.cmdApi.stop();
 			break;
 
+		case "default":
+			print("Switch to Mode: Default");
+			privateMessage_target_username = null;
+			break;
+
+		case "privatemessage":
+			// activate private message mode
+			print("Switch to Mode: PrivateMessage");
+			mode = ECommandLineMode.PrivateMessage;
+			print("Enter target User: ");
+			break;
+
 		default:
-			Logger.debug("Command not found: " + t);
+			Logger.trace("Command not found: " + t);
 			break;
 		}
 	}
@@ -49,4 +98,7 @@ public class CommandLineActions implements Consumer<String> {
 		System.out.println(Utils.getCurrentTime() + " [Console-Api] " + msg);
 	}
 
+	public enum ECommandLineMode {
+		Default, PrivateMessage
+	}
 }

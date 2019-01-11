@@ -40,7 +40,10 @@ public class Controller {
 	}
 
 	public static void addDefaults() {
-		ControllerTwitchBot.addBot(TwitchBotConfig.builder().id("fo0mebot").name("fo0mebot")
-				.oauth(OAuthFromFile.getKey()).channel("fo0me").build());
+		ControllerTwitchBot.addBot(TwitchBotConfig.builder()
+				.id("fo0mebot")
+				.name("fo0mebot")
+				.oauth(OAuthFromFile.getKey())
+				.channel("fo0me").build());
 	}
 }

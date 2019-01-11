@@ -5,12 +5,15 @@ import java.util.function.Consumer;
 
 import com.fo0.twitchbot.utils.Logger;
 
+import lombok.Getter;
 import lombok.NonNull;
 
 public class CommandLineReader {
 
 	private Consumer<String> listener;
 	private Thread thread;
+
+	@Getter
 	private Scanner scanner;
 
 	public CommandLineReader(@NonNull Consumer<String> listener) {
@@ -28,15 +31,15 @@ public class CommandLineReader {
 			while (true) {
 				try {
 					Logger.trace("Waiting for Commandline Input");
-					String input = scanner.next();
+					String input = scanner.nextLine();
 					Logger.trace("Console Input: " + input);
 					listener.accept(input);
 				} catch (Exception e) {
-					Logger.error("some error occurred at commandline-api, stopping module: "+e.getMessage());
+					Logger.error("some error occurred at commandline-api, stopping module: " + e.getMessage());
 					break;
 				}
 			}
-			
+
 			stop();
 		});
 

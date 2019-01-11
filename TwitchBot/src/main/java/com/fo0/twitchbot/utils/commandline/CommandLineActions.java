@@ -5,8 +5,11 @@ import java.util.function.Consumer;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fo0.twitchbot.bot.EBotAction;
 import com.fo0.twitchbot.config.ConfigParser;
 import com.fo0.twitchbot.controller.Controller;
+import com.fo0.twitchbot.controller.ControllerTwitchBot;
+import com.fo0.twitchbot.model.TwitchBotAction;
 import com.fo0.twitchbot.utils.Logger;
 import com.fo0.twitchbot.utils.Utils;
 import com.google.common.collect.Lists;
@@ -38,6 +41,7 @@ public class CommandLineActions implements Consumer<String> {
 			if (StringUtils.equals(t, ECommandLineMode.Default.name())) {
 				print("Switch to Mode: Default");
 				mode = ECommandLineMode.Default;
+				privateMessage_target_username = null;
 				return;
 			}
 
@@ -52,6 +56,12 @@ public class CommandLineActions implements Consumer<String> {
 
 			// TODO: access bot and send message
 			System.out.println("### SENDING MESSAGE TO USER: " + privateMessage_target_username + " --> " + t);
+			ControllerTwitchBot.getBot("fo0mebot")
+					.addAction(TwitchBotAction.builder().
+							toUser(privateMessage_target_username)
+							.action(EBotAction.PrivateMessage.name())
+							.value(t)
+							.build());
 			return;
 		}
 

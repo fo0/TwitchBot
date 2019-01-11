@@ -38,7 +38,7 @@ public class Controller {
 		Logger.info("Enabled the CommandLineApi");
 		cmdApi = new CommandlineApi();
 	}
-
+	
 	public static void addDefaults() {
 		ControllerTwitchBot.addBot(TwitchBotConfig.builder()
 				.id("fo0mebot")

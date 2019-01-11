@@ -148,7 +148,7 @@ public class TwitchBot {
 
 	public void sendMessageToUser(String user, String message) {
 		Logger.info("sending private-message to user: " + user + " -> " + getFormattedMessage(message));
-		bot.sendMessage(user, getFormattedMessage(message));
+		bot.sendMessage(getChannel(), "/w " + user + " " + getFormattedMessage(message));
 	}
 
 	public void sendTestMessage() {

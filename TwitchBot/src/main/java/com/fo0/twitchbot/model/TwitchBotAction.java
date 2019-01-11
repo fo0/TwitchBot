@@ -18,6 +18,8 @@ public class TwitchBotAction implements Serializable {
 
 	private String action;
 	
+	private String toUser;
+	
 	private String value;
 
 }

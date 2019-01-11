@@ -23,7 +23,7 @@ public class VariableFindTest {
 		while (m.find()) {
 			results.add("found var: " + m.group());
 		}
-		assertEquals("3", results.size());
+		assertEquals(3, results.size());
 	}
 
 	@Test

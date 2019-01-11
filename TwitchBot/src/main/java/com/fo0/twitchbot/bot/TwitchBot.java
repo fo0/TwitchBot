@@ -142,8 +142,13 @@ public class TwitchBot {
 	}
 
 	public void sendMessageToChannel(String message) {
-		Logger.info("sending message: " + getFormattedMessage(message));
+		Logger.info("sending message to channel: " + getFormattedMessage(message));
 		bot.sendMessage(getChannel(), getFormattedMessage(message));
+	}
+
+	public void sendMessageToUser(String user, String message) {
+		Logger.info("sending private-message to user: " + user + " -> " + getFormattedMessage(message));
+		bot.sendMessage(user, getFormattedMessage(message));
 	}
 
 	public void sendTestMessage() {

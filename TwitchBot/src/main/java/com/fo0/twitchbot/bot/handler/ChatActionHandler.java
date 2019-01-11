@@ -25,7 +25,8 @@ public class ChatActionHandler {
 
 		Logger.info("sending Answer of " + highlight(msg.getName()) + ": " + highlight(msg.getMessage()) + " --> "
 				+ highlight(message));
-		manager.addAction(TwitchBotAction.builder().action(EBotAction.Message.name()).value(message).build());
+		
+		manager.addAction(TwitchBotAction.builder().action(EBotAction.ChatMessage.name()).value(message).build());
 	}
 
 	public static String highlight(String str) {

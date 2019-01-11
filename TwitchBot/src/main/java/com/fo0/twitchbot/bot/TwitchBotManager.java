@@ -75,11 +75,14 @@ public class TwitchBotManager {
 	}
 
 	private void addUserJoinListener() {
-		// TODO: geht noch net!
-		bot.addUserJoinListener(e -> {
-			ChatActionHandler.handle(TwitchChatMessage.builder().name(e).message("User joined Channel: " + e).build(),
-					this);
-		});
+		new Thread(() -> {
+			Utils.sleep(TimeUnit.SECONDS, 3);
+			bot.addUserJoinListener(e -> {
+				addAction(TwitchBotAction.builder().action(EBotAction.ChatMessage.name()).value("User joined Channel: " + e)
+						.build());
+			});
+		}).start();
+		
 	}
 
 	public void addAction(TwitchBotAction action) {
@@ -87,13 +90,13 @@ public class TwitchBotManager {
 	}
 
 	public void startUpMessage() {
-		actionQueue.add(TwitchBotAction.builder().action(EBotAction.Message.name())
+		actionQueue.add(TwitchBotAction.builder().action(EBotAction.ChatMessage.name())
 				.value("Hi Leute, mein Name ist: " + config.getName()).build());
-		
+
 		// wait, because twitch spam
 		Utils.sleep(TimeUnit.SECONDS, 1);
-		
-		actionQueue.add(TwitchBotAction.builder().action(EBotAction.Message.name())
+
+		actionQueue.add(TwitchBotAction.builder().action(EBotAction.ChatMessage.name())
 				.value("Meine Actions sind: " + StringUtils.join(
 						BotAction.ACTIONS.keySet().parallelStream().map(e -> "!" + e).collect(Collectors.toList()),
 						", "))

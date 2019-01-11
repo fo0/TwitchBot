@@ -6,4 +6,5 @@ TwitchBot
 
 # usage requirements
 ## oauth key twitch
-https://twitchapps.com/tmi/
+* https://twitchapps.com/tmi/
+* save to path (in folder of java app): "auth/oauth.key"

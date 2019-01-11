@@ -4,4 +4,4 @@ TwitchBot
 # requirements
 ## project lombok
 https://projectlombok.org/
-## ide: ecliopse
+## ide: eclipse

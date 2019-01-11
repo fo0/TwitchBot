@@ -61,18 +61,17 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.6</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/pircbot/pircbot -->
-		<dependency>
-			<groupId>pircbot</groupId>
-			<artifactId>pircbot</artifactId>
-			<version>1.5.0</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/org.kitteh.irc/client-lib -->
 		<dependency>
 			<groupId>org.kitteh.irc</groupId>
 			<artifactId>client-lib</artifactId>
 			<version>[5.0.0, )</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
 		</dependency>
 	</dependencies>
 

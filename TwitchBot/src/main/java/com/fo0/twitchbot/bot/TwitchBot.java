@@ -37,6 +37,8 @@ public class TwitchBot {
 
 	private Consumer<TwitchChatMessage> chatListener;
 
+	private Consumer<String> userJoinListener;
+
 	public TwitchBot(String name, String channel, String oAuth) {
 		super();
 		this.name = name;
@@ -73,13 +75,20 @@ public class TwitchBot {
 		this.chatListener = chatListener;
 	}
 
+	/**
+	 * add this before start the bot
+	 * 
+	 * @param chatListener
+	 */
+	public void addUserJoinListener(Consumer<String> userJoinListener) {
+		this.userJoinListener = userJoinListener;
+	}
+
 	@Handler
 	public void onChatMessage(ChannelMessageEvent event) {
-		TwitchChatMessage msg = TwitchChatMessage.builder()
-				.name(event.getActor().getNick())
-				.message(event.getMessage())
+		TwitchChatMessage msg = TwitchChatMessage.builder().name(event.getActor().getNick()).message(event.getMessage())
 				.build();
-		
+
 		Logger.debug(String.format("Chat [%s] %s", msg.getName(), msg.getMessage()));
 
 		if (chatListener != null && StringUtils.isNotBlank(msg.getMessage())) {
@@ -90,6 +99,10 @@ public class TwitchBot {
 	@Handler
 	public void onUserJoinChannel(ChannelJoinEvent event) {
 		Logger.debug("User joined: " + event.getUser().getName());
+
+		if (userJoinListener != null) {
+			userJoinListener.accept(event.getUser().getName());
+		}
 	}
 
 	public void addCapabilities() {

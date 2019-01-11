@@ -1,0 +1,14 @@
+[
+	{
+		"key": "project",
+		"value": "Ich bin das aktuelle Projekt :-) Und hier ist mein Link: https://github.com/fo0/TwitchBot"
+	},
+	{
+		"key": "github",
+		"value": "fo0s Github Repository kannst du hier finden: https://github.com/fo0"
+	},
+	{
+		"key": "time",
+		"value": "Es ist $time Uhr"
+	}
+]

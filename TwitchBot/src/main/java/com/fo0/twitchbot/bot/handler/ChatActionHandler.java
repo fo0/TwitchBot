@@ -1,9 +1,6 @@
-package com.fo0.twitchbot.bot.actions;
-
-import java.util.Date;
+package com.fo0.twitchbot.bot.handler;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
 
 import com.fo0.twitchbot.bot.EBotAction;
 import com.fo0.twitchbot.bot.TwitchBotManager;
@@ -11,7 +8,7 @@ import com.fo0.twitchbot.model.TwitchBotAction;
 import com.fo0.twitchbot.model.TwitchChatMessage;
 import com.fo0.twitchbot.utils.Logger;
 
-public class ChatCommandHandler {
+public class ChatActionHandler {
 
 	public static void handle(TwitchChatMessage msg, TwitchBotManager manager) {
 		if (!isValidCommand(msg.getMessage())) {
@@ -19,22 +16,20 @@ public class ChatCommandHandler {
 			return;
 		}
 
-		Logger.debug("Evaluating Chat Command: " + msg.getName() + " -> \"" + msg.getMessage() + "\"");
-		switch (msg.getMessage().toLowerCase()) {
-		case "!zeit":
-		case "!time":
-			manager.addAction(TwitchBotAction.builder().action(EBotAction.Message.name())
-					.value("Es ist: " + getCurrentTime() + " Uhr").build());
-			break;
+		String message = BotAction.execute(String.valueOf(msg.getMessage()));
 
-		default:
-			Logger.debug("IGNORE: Not implemented ChatCommand: " + msg.getMessage());
-			break;
+		if (StringUtils.isEmpty(message)) {
+			Logger.debug("No action messge found for: " + msg.getMessage());
+			return;
 		}
+
+		Logger.info("sending Answer of " + highlight(msg.getName()) + ": " + highlight(msg.getMessage()) + " --> "
+				+ highlight(message));
+		manager.addAction(TwitchBotAction.builder().action(EBotAction.Message.name()).value(message).build());
 	}
 
-	public static String getCurrentTime() {
-		return DateFormatUtils.format(new Date(), "HH:mm:ss");
+	public static String highlight(String str) {
+		return "\"" + str + "\"";
 	}
 
 	public static boolean isValidCommand(String command) {

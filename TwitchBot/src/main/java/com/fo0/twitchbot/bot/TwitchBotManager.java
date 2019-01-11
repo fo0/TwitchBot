@@ -4,10 +4,15 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
-import com.fo0.twitchbot.bot.actions.ChatCommandHandler;
+import org.apache.commons.lang3.StringUtils;
+
+import com.fo0.twitchbot.bot.handler.BotAction;
+import com.fo0.twitchbot.bot.handler.ChatActionHandler;
 import com.fo0.twitchbot.model.TwitchBotAction;
 import com.fo0.twitchbot.model.TwitchBotConfig;
+import com.fo0.twitchbot.model.TwitchChatMessage;
 import com.fo0.twitchbot.utils.Logger;
 import com.fo0.twitchbot.utils.Utils;
 import com.google.common.collect.Queues;
@@ -37,6 +42,7 @@ public class TwitchBotManager {
 	public void start() {
 		if (config.isAllowChatCommands()) {
 			addChatListener();
+			addUserJoinListener();
 		}
 
 		bot.connectToTwitch();
@@ -45,11 +51,11 @@ public class TwitchBotManager {
 
 		startActionListener();
 
-		Utils.sleep(TimeUnit.SECONDS, 2);
-
-		startUpMessage();
+		Utils.sleep(TimeUnit.SECONDS, 1);
 
 		bot.addDefaultChannel();
+
+		startUpMessage();
 	}
 
 	public void stop() {
@@ -64,7 +70,15 @@ public class TwitchBotManager {
 
 	private void addChatListener() {
 		bot.addChatListener(e -> {
-			ChatCommandHandler.handle(e, this);
+			ChatActionHandler.handle(e, this);
+		});
+	}
+
+	private void addUserJoinListener() {
+		// TODO: geht noch net!
+		bot.addUserJoinListener(e -> {
+			ChatActionHandler.handle(TwitchChatMessage.builder().name(e).message("User joined Channel: " + e).build(),
+					this);
 		});
 	}
 
@@ -75,6 +89,15 @@ public class TwitchBotManager {
 	public void startUpMessage() {
 		actionQueue.add(TwitchBotAction.builder().action(EBotAction.Message.name())
 				.value("Hi Leute, mein Name ist: " + config.getName()).build());
+		
+		// wait, because twitch spam
+		Utils.sleep(TimeUnit.SECONDS, 1);
+		
+		actionQueue.add(TwitchBotAction.builder().action(EBotAction.Message.name())
+				.value("Meine Actions sind: " + StringUtils.join(
+						BotAction.ACTIONS.keySet().parallelStream().map(e -> "!" + e).collect(Collectors.toList()),
+						", "))
+				.build());
 	}
 
 	private void startActionListener() {

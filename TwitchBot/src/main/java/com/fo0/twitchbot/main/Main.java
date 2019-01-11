@@ -10,6 +10,8 @@ public class Main {
 	 * * Spam detection <br>
 	 * * REST Api <br>
 	 * * Web GUI <br>
+	 * * GoogleTranslate <br>
+	 * * BotAction Api / Templates <br>
 	 * 
 	 * @param args
 	 */

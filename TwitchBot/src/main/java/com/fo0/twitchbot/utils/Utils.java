@@ -18,7 +18,7 @@ public class Utils {
 	}
 
 	public static void sleep(TimeUnit unit, long sleep) {
-		Logger.debug("Sleeping " + DurationFormatUtils.formatDuration(unit.toMillis(sleep), "HH:mm:ssS"));
+		Logger.trace("Sleeping " + DurationFormatUtils.formatDuration(unit.toMillis(sleep), "HH:mm:ssS"));
 		try {
 			unit.sleep(sleep);
 		} catch (InterruptedException e) {

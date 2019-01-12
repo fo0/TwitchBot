@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import com.fo0.twitchbot.bot.EBotAction;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,7 +18,8 @@ public class TwitchBotAction implements Serializable {
 	@Builder.Default
 	private String id = RandomStringUtils.randomAlphabetic(10);
 
-	private String action;
+	@Builder.Default
+	private String action = EBotAction.ChatMessage.name();
 	
 	private String toUser;
 	

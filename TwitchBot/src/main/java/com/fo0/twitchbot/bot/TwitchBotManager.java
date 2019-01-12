@@ -6,14 +6,15 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fo0.twitchbot.bot.handler.BotAction;
 import com.fo0.twitchbot.bot.handler.ChatActionHandler;
 import com.fo0.twitchbot.model.TwitchBotAction;
 import com.fo0.twitchbot.model.TwitchBotConfig;
-import com.fo0.twitchbot.model.TwitchChatMessage;
 import com.fo0.twitchbot.utils.Logger;
+import com.fo0.twitchbot.utils.SpamDetection;
 import com.fo0.twitchbot.utils.Utils;
 import com.google.common.collect.Queues;
 
@@ -25,6 +26,7 @@ public class TwitchBotManager {
 	private ExecutorService actionListener = Executors.newSingleThreadExecutor();
 
 	private LinkedBlockingQueue<TwitchBotAction> actionQueue = Queues.newLinkedBlockingQueue();
+	private SpamDetection spamDetector;
 
 	public TwitchBotManager(TwitchBotConfig config) {
 		this.config = config;
@@ -43,6 +45,9 @@ public class TwitchBotManager {
 		if (config.isAllowChatCommands()) {
 			addChatListener();
 			addUserJoinListener();
+			if (config.isEnableSpamDetection()) {
+				addChatSpamDetection();
+			}
 		}
 
 		bot.connectToTwitch();
@@ -71,6 +76,17 @@ public class TwitchBotManager {
 	private void addChatListener() {
 		bot.addChatListener(e -> {
 			ChatActionHandler.handle(e, this);
+			if (spamDetector != null) {
+				spamDetector.addUser(e.getName());
+			}
+		});
+	}
+
+	public void addChatSpamDetection() {
+		spamDetector = new SpamDetection(config.getInterval(), config.getTreshold(), e -> {
+			String info = "detected spammers: " + StringUtils.join(e.keySet(), ", ");
+			Logger.info(info);
+			addAction(TwitchBotAction.builder().action(EBotAction.ChatMessage.name()).value(info).build());
 		});
 	}
 
@@ -78,11 +94,11 @@ public class TwitchBotManager {
 		new Thread(() -> {
 			Utils.sleep(TimeUnit.SECONDS, 3);
 			bot.addUserJoinListener(e -> {
-				addAction(TwitchBotAction.builder().action(EBotAction.ChatMessage.name()).value("User joined Channel: " + e)
-						.build());
+				addAction(TwitchBotAction.builder().action(EBotAction.ChatMessage.name())
+						.value("User joined Channel: " + e).build());
 			});
 		}).start();
-		
+
 	}
 
 	public void addAction(TwitchBotAction action) {

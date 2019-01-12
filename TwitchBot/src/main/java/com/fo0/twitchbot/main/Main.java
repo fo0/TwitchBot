@@ -19,6 +19,7 @@ public class Main {
 	 * * version update functionality (updater)
 	 * * gewinnspiel module
 	 * * music controller (!music vote youtube.link)
+	 * * save twitchbots sessions to load config/json
 	 * 
 	 * @param args
 	 */

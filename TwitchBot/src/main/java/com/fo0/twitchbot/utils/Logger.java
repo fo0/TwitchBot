@@ -27,6 +27,10 @@ public class Logger {
 		System.err.println(timestamp() + " [ERROR] " + msg);
 	}
 
+	public static void warn(String msg) {
+		System.out.println(timestamp() + " [WARNING] " + msg);
+	}
+
 	private static String timestamp() {
 		return df.format(new Date());
 	}

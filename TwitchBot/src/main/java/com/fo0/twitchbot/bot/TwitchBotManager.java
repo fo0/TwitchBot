@@ -83,7 +83,7 @@ public class TwitchBotManager {
 	}
 
 	public void addChatSpamDetection() {
-		spamDetector = new SpamDetection(config.getInterval(), config.getTreshold(), e -> {
+		spamDetector = new SpamDetection(config.getSpamDetectionInterval(), config.getSpamDetectionThreshold(), e -> {
 			String info = "detected spammers: " + StringUtils.join(e.keySet(), ", ");
 			Logger.info(info);
 			addAction(TwitchBotAction.builder().action(EBotAction.ChatMessage.name()).value(info).build());

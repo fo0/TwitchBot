@@ -10,5 +10,9 @@
 	{
 		"key": "time",
 		"value": "Es ist $time Uhr"
+	},
+	{
+		"key": "fo0",
+		"value": "Bester Coder der Welt! :-)"
 	}
 ]

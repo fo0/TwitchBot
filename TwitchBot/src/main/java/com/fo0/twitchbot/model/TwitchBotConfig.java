@@ -29,9 +29,9 @@ public class TwitchBotConfig implements Serializable {
 	@Builder.Default
 	private boolean enableSpamDetection = true;
 	@Builder.Default
-	private long interval = 2000;
+	private long spamDetectionInterval = 2000;
 	@Builder.Default
-	private long treshold = 3;
+	private long spamDetectionThreshold = 3;
 
 	public String info() {
 		return String.format("%s [%s]", name, id);

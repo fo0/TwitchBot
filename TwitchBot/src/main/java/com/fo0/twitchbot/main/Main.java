@@ -14,9 +14,11 @@ public class Main {
 	 * * Custom Commands :: added via templates <br>
 	 * * REST Api <br>
 	 * * Web GUI <br>
-	 * * GoogleTranslate <br>
+	 * * GoogleTranslate :: kostenpflichtig <br>
 	 * * BotAction Api / Templates :: first iteration finished  <br>
 	 * * version update functionality (updater)
+	 * * gewinnspiel module
+	 * * music controller (!music vote youtube.link)
 	 * 
 	 * @param args
 	 */

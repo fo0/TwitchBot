@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.junit.BeforeClass;
 
 import com.fo0.twitchbot.bot.TwitchBot;
-import com.fo0.twitchbot.utils.OAuthFromFile;
+import com.fo0.twitchbot.utils.AuthFromFile;
 
 public class ConnectTest {
 
@@ -15,7 +15,7 @@ public class ConnectTest {
 
 	@BeforeClass
 	public static void beforeClass() {
-		oAuth = OAuthFromFile.getKey();
+		oAuth = AuthFromFile.getTwitchOauthKey();
 	}
 
 	@org.junit.Test

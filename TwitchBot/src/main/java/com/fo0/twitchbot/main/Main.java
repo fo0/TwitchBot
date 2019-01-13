@@ -5,7 +5,7 @@ import com.fo0.twitchbot.controller.Controller;
 public class Main {
 
 	/**
-	 * TODO: <br> 
+	 * * == TODO: ==
 	 * * version update functionality (updater)
 	 * * private message to join user with welcome message <br>
 	 * * private message to join user with help commands <br>
@@ -17,10 +17,18 @@ public class Main {
 	 * * Web GUI <br>
 	 * * GoogleTranslate :: kostenpflichtig <br>
 	 * * BotAction Api / Templates :: first iteration finished  <br>
-	 * * gewinnspiel module
+	 * * gewinnspiel (giveaway) module
 	 * * music controller (!music vote youtube.link)
 	 * * save twitchbots sessions to load config/json
 	 * 
+	 * 
+	 *  == finished ==
+	 * * multiple bot creation
+	 * * custom action templates
+	 * * simple spam detectionw
+	 * * commandline api
+	 * * start params (options)
+	 * * 
 	 * @param args
 	 */
 	public static void main(String[] args) {

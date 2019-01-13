@@ -79,10 +79,11 @@ public class SpamDetection {
 		Logger.trace("start spam detect");
 		Map<String, Long> spammers = map.entrySet().stream().filter(e -> e.getValue() >= treshold)
 				.collect(Collectors.toMap(Entry::getKey, Entry::getValue));
-		Logger.debug("spam detect result: " + spammers.size());
 
-		if (MapUtils.isNotEmpty(spammers))
+		if (MapUtils.isNotEmpty(spammers)) {
+			Logger.debug("spam detect result: " + spammers.size());
 			listener.accept(spammers);
+		}
 
 		map.clear();
 	}

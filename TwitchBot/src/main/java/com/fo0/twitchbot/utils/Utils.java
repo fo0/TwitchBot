@@ -1,11 +1,13 @@
 package com.fo0.twitchbot.utils;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 
@@ -38,6 +40,16 @@ public class Utils {
 			list.add(m.group());
 		}
 		return list;
+	}
+
+	public static boolean writeBytesToFile(byte[] bytes, File file) {
+		try {
+			FileUtils.writeByteArrayToFile(file, bytes);
+		} catch (Exception e) {
+			Logger.info("failed to override bytes from file" + e);
+			return false;
+		}
+		return true;
 	}
 
 }

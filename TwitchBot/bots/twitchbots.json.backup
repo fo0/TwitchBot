@@ -1,0 +1,18 @@
+{
+	"created": 1547404311294,
+	"updated": 0,
+	"list": [
+		{
+			"id": "gmrUzfORjk",
+			"name": "fo0mebot",
+			"channel": "fo0me",
+			"oauth": "",
+			"autostart": true,
+			"startUpMessage": false,
+			"allowChatCommands": true,
+			"enableSpamDetection": true,
+			"spamDetectionInterval": 2000,
+			"spamDetectionThreshold": 3
+		}
+	]
+}

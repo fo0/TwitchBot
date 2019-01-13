@@ -6,6 +6,7 @@ public class Main {
 
 	/**
 	 * TODO: <br> 
+	 * * version update functionality (updater)
 	 * * private message to join user with welcome message <br>
 	 * * private message to join user with help commands <br>
 	 * * receive private messages
@@ -16,7 +17,6 @@ public class Main {
 	 * * Web GUI <br>
 	 * * GoogleTranslate :: kostenpflichtig <br>
 	 * * BotAction Api / Templates :: first iteration finished  <br>
-	 * * version update functionality (updater)
 	 * * gewinnspiel module
 	 * * music controller (!music vote youtube.link)
 	 * * save twitchbots sessions to load config/json

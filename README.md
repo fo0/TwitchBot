@@ -2,7 +2,6 @@
 TwitchBot
 
 # TODO
-
  * version update functionality (updater)
  * private message to join user with welcome message <br>
  * private message to join user with help commands <br>

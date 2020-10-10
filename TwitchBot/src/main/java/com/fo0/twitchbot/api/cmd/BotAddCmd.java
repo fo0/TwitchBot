@@ -6,11 +6,14 @@ import org.apache.commons.lang3.StringUtils;
 
 import com.fo0.twitchbot.controller.ControllerTwitchBot;
 import com.fo0.twitchbot.model.TwitchBotConfig;
+import com.fo0.twitchbot.spring.utils.SpringContext;
 import com.fo0.twitchbot.utils.AuthFromFile;
 import com.fo0.twitchbot.utils.commandline.CommandLineActions.ECommandLineMode;
 
 public class BotAddCmd {
 
+    private ControllerTwitchBot bot = SpringContext.getBean(ControllerTwitchBot.class);
+    
 	private Consumer<String> printListener;
 	private Consumer<ECommandLineMode> modeChanger;
 
@@ -55,7 +58,7 @@ public class BotAddCmd {
 
 		if (StringUtils.equalsIgnoreCase(input, "y")) {
 			// save
-			ControllerTwitchBot.addBot(config);
+			bot.addBot(config);
 			modeChanger.accept(ECommandLineMode.Default);
 			return;
 		} else {

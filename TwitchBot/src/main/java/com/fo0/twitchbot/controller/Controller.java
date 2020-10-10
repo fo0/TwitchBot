@@ -20,6 +20,9 @@ public class Controller {
     @Autowired
     private StartUpMessage startUp;
 
+    @Autowired
+    private ControllerTwitchBot bot;
+
     @PostConstruct
     public void init() {
         Logger.debug("starting controller");
@@ -32,12 +35,13 @@ public class Controller {
         System.setProperty("java.net.preferIPv4Stack", "true");
     }
 
+    @PostConstruct
     public void addDefaults() {
-        ControllerTwitchBot.addBot(TwitchBotConfig.builder()
-                                                  .id("fo0mebot")
-                                                  .name("fo0mebot")
-                                                  .oauth(AuthFromFile.getTwitchOauthKey())
-                                                  .channel("fo0me")
-                                                  .build());
+        bot.addBot(TwitchBotConfig.builder()
+                                  .id("fo0mebot")
+                                  .name("fo0mebot")
+                                  .oauth(AuthFromFile.getTwitchOauthKey())
+                                  .channel("fo0me")
+                                  .build());
     }
 }

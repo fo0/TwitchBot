@@ -16,7 +16,7 @@ public class ControllerSystem {
 		Logger.info("starting controller: system");
 	}
 
-	public static SystemInfo info() {
+	public SystemInfo info() {
 		return SystemInfo.builder().availableProcessors(SystemInfoCollector.getCPU())
 				.cpuAverageLoad(SystemInfoCollector.getCpuAverageLoad())
 				.processorArchitecture(SystemInfoCollector.getProcessorArchitecture())

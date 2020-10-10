@@ -19,8 +19,8 @@ import com.google.common.collect.Lists;
 
 public class CommandLineActions implements Consumer<String> {
 
-	private static final List<String> COMMANDS = Lists.newArrayList(
-	//@formatter:off
+    private static final List<String> COMMANDS = Lists.newArrayList(
+    //@formatter:off
 			"help",
 			"version",
 			"reload-templates",
@@ -28,111 +28,113 @@ public class CommandLineActions implements Consumer<String> {
 			"default-mode", "privatemessage-mode", "update-mode","bot-add-mode"
 	//@formatter:on
 
-	);
+    );
 
-	private CommandLineReader reader = null;
+    private CommandLineReader reader;
+    private ControllerTwitchBot bot;
 
-	private String privateMessage_bot_name;
-	private String privateMessage_target_username;
-	private boolean updateCheck = false;
+    private String privateMessage_bot_name;
+    private String privateMessage_target_username;
+    private boolean updateCheck = false;
 
-	private ECommandLineMode mode = ECommandLineMode.Default;
+    private ECommandLineMode mode = ECommandLineMode.Default;
 
-	private BotAddCmd botAdd = null;
+    private BotAddCmd botAdd = null;
 
-	private Consumer<String> printListener = e -> print(e);
-	private Consumer<ECommandLineMode> modeChanger = e -> setMode(e);
+    private Consumer<String> printListener = e -> print(e);
+    private Consumer<ECommandLineMode> modeChanger = e -> setMode(e);
 
-	private UpdateModeCmd update;
+    private UpdateModeCmd update;
 
-	public CommandLineActions(CommandLineReader reader) {
-		this.reader = reader;
-	}
+    public CommandLineActions(CommandLineReader reader, ControllerTwitchBot bot) {
+        this.reader = reader;
+        this.bot = bot;
+    }
 
-	@Override
-	public void accept(String t) {
-		if (StringUtils.isBlank(t)) {
-			Logger.trace("IGNORE: blank commandline api input");
-			return;
-		}
+    @Override
+    public void accept(String t) {
+        if (StringUtils.isBlank(t)) {
+            Logger.trace("IGNORE: blank commandline api input");
+            return;
+        }
 
-		switch (mode) {
-		case PrivateMessage:
-			privateMessageMode(t);
-			return;
+        switch (mode) {
+            case PrivateMessage :
+                privateMessageMode(t);
+                return;
 
-		case Update:
-			updateMode(t);
-			break;
+            case Update :
+                updateMode(t);
+                break;
 
-		case BotAdd:
-			botadd(t);
-			break;
+            case BotAdd :
+                botadd(t);
+                break;
 
-		default:
-			// Default mode
-			break;
-		}
+            default :
+                // Default mode
+                break;
+        }
 
-		String toLowerCaseAction = new String(t);
-		switch (toLowerCaseAction) {
-		case "help":
-			print("Current Commands are: " + StringUtils.join(COMMANDS, ", "));
-			break;
+        String toLowerCaseAction = new String(t);
+        switch (toLowerCaseAction) {
+            case "help" :
+                print("Current Commands are: " + StringUtils.join(COMMANDS, ", "));
+                break;
 
-		case "version":
-			print("Current Version is: " + CONSTANTS.VERSION);
-			break;
+            case "version" :
+                print("Current Version is: " + CONSTANTS.VERSION);
+                break;
 
-		case "reload-templates":
-			ActionDefaultTemplate.reloadTemplate();
-			FAQStoreTemplate.reloadTemplate();
-			break;
+            case "reload-templates" :
+                ActionDefaultTemplate.reloadTemplate();
+                FAQStoreTemplate.reloadTemplate();
+                break;
 
-		case "commandline-api-restart":
-			new Thread(() -> {
-//				Controller.cmdApi.stop();
-//				Utils.sleep(1000);
-//				Controller.cmdApi.start();
-			    currentlyNotSupported();
-			}).start();
-			break;
+            case "commandline-api-restart" :
+                new Thread(() -> {
+                    // Controller.cmdApi.stop();
+                    // Utils.sleep(1000);
+                    // Controller.cmdApi.start();
+                    currentlyNotSupported();
+                }).start();
+                break;
 
-		case "commandline-api-stop":
-		    currentlyNotSupported();
-			break;
+            case "commandline-api-stop" :
+                currentlyNotSupported();
+                break;
 
-		case "default-mode":
-			print("Switch to Mode: Default");
-			mode = ECommandLineMode.Default;
-			break;
+            case "default-mode" :
+                print("Switch to Mode: Default");
+                mode = ECommandLineMode.Default;
+                break;
 
-		case "privatemessage-mode":
-			// activate private message mode
-			print("Switch to Mode: PrivateMessage");
-			mode = ECommandLineMode.PrivateMessage;
-			print("Enter a Bot Name: ");
-			break;
+            case "privatemessage-mode" :
+                // activate private message mode
+                print("Switch to Mode: PrivateMessage");
+                mode = ECommandLineMode.PrivateMessage;
+                print("Enter a Bot Name: ");
+                break;
 
-		case "update-mode":
-			print("Switch to Mode: Update");
-			mode = ECommandLineMode.Update;
-			update = new UpdateModeCmd(printListener, modeChanger);
-			updateMode(t);
-			break;
+            case "update-mode" :
+                print("Switch to Mode: Update");
+                mode = ECommandLineMode.Update;
+                update = new UpdateModeCmd(printListener, modeChanger);
+                updateMode(t);
+                break;
 
-		case "bot-add-mode":
-			print("Switch to Mode: Bot-Add");
-			mode = ECommandLineMode.BotAdd;
-			botAdd = new BotAddCmd(printListener, modeChanger);
-			botadd(t);
-			break;
+            case "bot-add-mode" :
+                print("Switch to Mode: Bot-Add");
+                mode = ECommandLineMode.BotAdd;
+                botAdd = new BotAddCmd(printListener, modeChanger);
+                botadd(t);
+                break;
 
-		default:
-			Logger.trace("Command not found: " + t);
-			break;
-		}
-	}
+            default :
+                Logger.trace("Command not found: " + t);
+                break;
+        }
+    }
 
     /**
      * 
@@ -143,74 +145,78 @@ public class CommandLineActions implements Consumer<String> {
         printListener.accept("currently not supported");
     }
 
-	public void print(String msg) {
-		System.out.println(Utils.getCurrentTime() + " [Console|" + mode + "] " + msg);
-	}
+    public void print(String msg) {
+        System.out.println(Utils.getCurrentTime() + " [Console|" + mode + "] " + msg);
+    }
 
-	public void setMode(ECommandLineMode mode) {
-		print("Set Mode To: " + mode);
-		this.mode = mode;
-	}
+    public void setMode(ECommandLineMode mode) {
+        print("Set Mode To: " + mode);
+        this.mode = mode;
+    }
 
-	private void botadd(String t) {
-		if (StringUtils.equalsIgnoreCase(t, "Exit")) {
-			print("Switch to Mode: Default");
-			mode = ECommandLineMode.Default;
-			return;
-		}
+    private void botadd(String t) {
+        if (StringUtils.equalsIgnoreCase(t, "Exit")) {
+            print("Switch to Mode: Default");
+            mode = ECommandLineMode.Default;
+            return;
+        }
 
-		botAdd.actions(t);
-		return;
-	}
+        botAdd.actions(t);
+        return;
+    }
 
-	private void updateMode(String t) {
-		if (StringUtils.equalsIgnoreCase(t, "Exit")) {
-			print("Switch to Mode: Default");
-			mode = ECommandLineMode.Default;
-			return;
-		}
+    private void updateMode(String t) {
+        if (StringUtils.equalsIgnoreCase(t, "Exit")) {
+            print("Switch to Mode: Default");
+            mode = ECommandLineMode.Default;
+            return;
+        }
 
-		update.actions(t);
-		return;
-	}
+        update.actions(t);
+        return;
+    }
 
-	private void privateMessageMode(String t) {
-		if (StringUtils.equalsIgnoreCase(t, "Exit")) {
-			print("Switch to Mode: Default");
-			mode = ECommandLineMode.Default;
-			privateMessage_target_username = null;
-			privateMessage_bot_name = null;
-			return;
-		}
+    private void privateMessageMode(String t) {
+        if (StringUtils.equalsIgnoreCase(t, "Exit")) {
+            print("Switch to Mode: Default");
+            mode = ECommandLineMode.Default;
+            privateMessage_target_username = null;
+            privateMessage_bot_name = null;
+            return;
+        }
 
-		if (StringUtils.isBlank(privateMessage_bot_name)) {
-			if (ControllerTwitchBot.getBotByName(t) == null) {
-				print("Could not find a registered Bot with name: " + t);
-				print("Enter another Bot Name: ");
-				return;
-			}
+        if (StringUtils.isBlank(privateMessage_bot_name)) {
+            if (bot.getBotByName(t) == null) {
+                print("Could not find a registered Bot with name: " + t);
+                print("Enter another Bot Name: ");
+                return;
+            }
 
-			privateMessage_bot_name = t;
-			print("Enter target User: ");
-			return;
-		}
+            privateMessage_bot_name = t;
+            print("Enter target User: ");
+            return;
+        }
 
-		// handle private messages
-		// add target user name
-		if (StringUtils.isBlank(privateMessage_target_username)) {
-			privateMessage_target_username = t;
-			print("All Text below sends to user: " + privateMessage_target_username);
-			print("You can stop the mode and change back to mode: default with the input \"Exit\"");
-			return;
-		}
+        // handle private messages
+        // add target user name
+        if (StringUtils.isBlank(privateMessage_target_username)) {
+            privateMessage_target_username = t;
+            print("All Text below sends to user: " + privateMessage_target_username);
+            print("You can stop the mode and change back to mode: default with the input \"Exit\"");
+            return;
+        }
 
-//		System.out.println("### SENDING MESSAGE TO USER: " + privateMessage_target_username + " --> " + t);
-		ControllerTwitchBot.getBotByName(privateMessage_bot_name).addAction(TwitchBotAction.builder()
-				.toUser(privateMessage_target_username).action(EBotAction.PrivateMessage.name()).value(t).build());
-		return;
-	}
+        // System.out.println("### SENDING MESSAGE TO USER: " +
+        // privateMessage_target_username + " --> " + t);
+        bot.getBotByName(privateMessage_bot_name)
+           .addAction(TwitchBotAction.builder()
+                                     .toUser(privateMessage_target_username)
+                                     .action(EBotAction.PrivateMessage.name())
+                                     .value(t)
+                                     .build());
+    }
 
-	public enum ECommandLineMode {
-		Default, PrivateMessage, Update, BotAdd
-	}
+    public enum ECommandLineMode {
+        Default, PrivateMessage, Update, BotAdd
+    }
 }

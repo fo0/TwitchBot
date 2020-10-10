@@ -1,5 +1,6 @@
 package com.fo0.twitchbot.api.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +24,15 @@ import reactor.core.publisher.Mono;
 @RequestMapping("bot")
 public class BotApi extends ARestBasicTemplate {
 
+    @Autowired
+    private ControllerTwitchBot controller;
+
     @Operation(summary = "default summary")
     @PostMapping("add")
     public void add(@RequestBody String twitchbotConfig) {
         executeRequestMono(() -> {
             TwitchBotConfig tbc = new Gson().fromJson(twitchbotConfig, TwitchBotConfig.class);
-            ControllerTwitchBot.addBot(tbc);
+            controller.addBot(tbc);
         });
     }
 
@@ -36,7 +40,7 @@ public class BotApi extends ARestBasicTemplate {
     @GetMapping("list")
     public Flux<TwitchBotConfig> list() {
         return executeRequestFlux(() -> {
-            return ControllerTwitchBot.getSessionConfigs();
+            return controller.getSessionConfigs();
         });
     }
 
@@ -44,7 +48,7 @@ public class BotApi extends ARestBasicTemplate {
     @GetMapping("find-by-id")
     public Mono<TwitchBotManager> findByID(@RequestParam(value = "id") String id) {
         return executeRequestMono(() -> {
-            return ControllerTwitchBot.getBotByID(id);
+            return controller.getBotByID(id);
         });
     }
 

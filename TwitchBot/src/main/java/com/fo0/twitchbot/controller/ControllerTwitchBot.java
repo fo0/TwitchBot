@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -24,13 +26,14 @@ public class ControllerTwitchBot {
 	@Getter
 	private static final Map<String, TwitchBotManager> SESSIONS = Maps.newHashMap();
 
-	public static void init() {
+	@PostConstruct
+	public void init() {
 		Logger.info("starting controller: twitchbot");
 
 		loadConfig();
 	}
 
-	public static void loadConfig() {
+	public void loadConfig() {
 		TwitchBotConfigLoader.init();
 
 		TwitchBotConfigLoader.getBots().getList().stream().forEach(bot -> {
@@ -38,11 +41,11 @@ public class ControllerTwitchBot {
 		});
 	}
 
-	public static TwitchBotManager getBotByID(String id) {
+	public TwitchBotManager getBotByID(String id) {
 		return SESSIONS.get(id);
 	}
 
-	public static TwitchBotManager getBotByName(String name) {
+	public TwitchBotManager getBotByName(String name) {
 		return SESSIONS.entrySet()
 				.stream()
 				.filter(e -> StringUtils.equals(e.getValue().getConfig().getName(), name))
@@ -51,11 +54,11 @@ public class ControllerTwitchBot {
 				.orElse(null);
 	}
 
-	public static void addBot(TwitchBotConfig config) {
+	public void addBot(TwitchBotConfig config) {
 		addBot(config, true);
 	}
 
-	public static void addBot(TwitchBotConfig config, boolean save) {
+	public void addBot(TwitchBotConfig config, boolean save) {
 		if (getBotByName(config.getName()) != null) {
 			Logger.error(String.format("Cannot add Bot with Name '%s' already exists", config.getName()));
 			return;
@@ -75,12 +78,12 @@ public class ControllerTwitchBot {
 		}
 	}
 
-	public static void removeBot(String id) {
+	public void removeBot(String id) {
 		Logger.info("Removing Bot with ID: " + id);
 		SESSIONS.remove(id);
 	}
 
-	public static Collection<TwitchBotConfig> getSessionConfigs() {
+	public Collection<TwitchBotConfig> getSessionConfigs() {
 		return SESSIONS.entrySet().stream().map(e -> e.getValue().getConfig()).collect(Collectors.toList());
 	}
 

@@ -4,12 +4,9 @@ import java.util.function.Consumer;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.fo0.twitchbot.Main;
-import com.fo0.twitchbot.controller.Controller;
 import com.fo0.twitchbot.update.GitHubReleaseInfo;
 import com.fo0.twitchbot.update.UpdateUtils;
 import com.fo0.twitchbot.utils.Logger;
-import com.fo0.twitchbot.utils.Utils;
 import com.fo0.twitchbot.utils.commandline.CommandLineActions.ECommandLineMode;
 
 public class UpdateModeCmd {

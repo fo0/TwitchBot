@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import com.fo0.twitchbot.bot.TwitchBotManager;
 import com.fo0.twitchbot.config.twitchbots.TwitchBotConfigLoader;
@@ -17,6 +18,7 @@ import com.google.common.collect.Maps;
 
 import lombok.Getter;
 
+@Component
 public class ControllerTwitchBot {
 
 	@Getter

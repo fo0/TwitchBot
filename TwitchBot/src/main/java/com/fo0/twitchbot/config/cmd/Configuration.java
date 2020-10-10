@@ -4,11 +4,12 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
+import com.fo0.twitchbot.api.cmd.CommandlineApi;
 import com.fo0.twitchbot.bot.template.ActionDefaultTemplate;
 import com.fo0.twitchbot.bot.template.FAQStoreTemplate;
-import com.fo0.twitchbot.controller.Controller;
 import com.fo0.twitchbot.spring.components.AppArgs;
 import com.fo0.twitchbot.utils.CONSTANTS;
 import com.fo0.twitchbot.utils.Logger;
@@ -20,45 +21,41 @@ public class Configuration {
     private AppArgs args;
 
     @Autowired
-    private Controller controller;
-    
+    private CommandlineApi cmdApi;
+
     @PostConstruct
     public void init() {
         Logger.debug("starting configuration");
 
-        Controller.config = ConfigParser.parseConfig(args.getCmdArgs());
+        Config config = createConfigByParser();
+        
+        CONSTANTS.DEBUG = config.debug;
 
-        applyConfig();
+        if (StringUtils.isNotBlank(config.configDir)) {
+            // applying botcnfig
+            CONSTANTS.CONFIG_FOLDER_PATH = config.configDir;
+        }
+
+        if (config.commandLineApi) {
+            cmdApi.start();
+        }
+
+        if (config.port != 1234) {
+            CONSTANTS.REST_PORT = config.port;
+        }
+
+        if (StringUtils.isNotBlank(config.apiKey)) {
+            CONSTANTS.REST_API_KEY = config.apiKey;
+        }
 
         ActionDefaultTemplate.init();
 
         FAQStoreTemplate.init();
     }
 
-    /**
-     * 
-     * @Created 10.10.2020 - 22:48:03
-     * @author fo0 (GH:fo0)
-     */
-    private void applyConfig() {
-        CONSTANTS.DEBUG = Controller.config.debug;
-
-        if (StringUtils.isNotBlank(Controller.config.configDir)) {
-            // applying botcnfig
-            CONSTANTS.CONFIG_FOLDER_PATH = Controller.config.configDir;
-        }
-
-        if (Controller.config.commandLineApi) {
-            controller.enableCommandlineApi();
-        }
-
-        if (Controller.config.port != 1234) {
-            CONSTANTS.REST_PORT = Controller.config.port;
-        }
-
-        if (StringUtils.isNotBlank(Controller.config.apiKey)) {
-            CONSTANTS.REST_API_KEY = Controller.config.apiKey;
-        }
+    @Bean
+    public Config createConfigByParser() {
+        return ConfigParser.parseConfig(args.getCmdArgs());
     }
 
 }

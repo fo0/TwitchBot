@@ -1,46 +1,38 @@
-//package com.fo0.twitchbot.api.rest;
-//
-//import javax.ws.rs.GET;
-//import javax.ws.rs.HeaderParam;
-//import javax.ws.rs.POST;
-//import javax.ws.rs.Path;
-//import javax.ws.rs.core.Response;
-//
-//import com.fo0.twitchbot.api.auth.RESTApiRequestHandler;
-//import com.fo0.twitchbot.api.rest.utils.RESTResponse;
-//import com.fo0.twitchbot.utils.CONSTANTS;
-//
-//@Path(CONSTANTS.REST_PATH_TEMPLATE)
-//public class ActionTemplateApi {
-//
-//	@POST
-//	@Path(CONSTANTS.REST_PATH_TEMPLATE_ADD)
-//	public Response add(@HeaderParam(value = "api_key") String apiKey) {
-//		if (!RESTApiRequestHandler.validateApiKey(apiKey)) {
-//			return RESTResponse.API_KEY_INVALID().build();
-//		}
-//
-//		return RESTResponse.OK().build();
-//	}
-//
-//	@GET
-//	@Path(CONSTANTS.REST_PATH_TEMPLATE_LIST)
-//	public Response list(@HeaderParam(value = "api_key") String apiKey) {
-//		if (!RESTApiRequestHandler.validateApiKey(apiKey)) {
-//			return RESTResponse.API_KEY_INVALID().build();
-//		}
-//
-//		return RESTResponse.OK().build();
-//	}
-//
-//	@GET
-//	@Path(CONSTANTS.REST_PATH_TEMPLATE_FINDBYID)
-//	public Response findbyid(@HeaderParam(value = "api_key") String apiKey) {
-//		if (!RESTApiRequestHandler.validateApiKey(apiKey)) {
-//			return RESTResponse.API_KEY_INVALID().build();
-//		}
-//
-//		return RESTResponse.OK().build();
-//	}
-//
-//}
+package com.fo0.twitchbot.api.rest;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fo0.twitchbot.api.rest.utils.ARestBasicTemplate;
+import com.fo0.twitchbot.bot.template.ActionDefaultTemplate;
+import com.fo0.twitchbot.bot.template.FAQStoreTemplate;
+import com.fo0.twitchbot.model.BotActionConfig;
+import com.fo0.twitchbot.model.FAQConfig;
+
+import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.log4j.Log4j2;
+import reactor.core.publisher.Mono;
+
+@Log4j2
+@RestController
+@RequestMapping("template")
+public class ActionTemplateApi extends ARestBasicTemplate {
+
+    @Operation(summary = "default summary")
+    @GetMapping("action-template")
+    public Mono<BotActionConfig> actionTemplateList() {
+        return executeRequestMono(() -> {
+            return ActionDefaultTemplate.getCONFIG();
+        });
+    }
+
+    @Operation(summary = "default summary")
+    @GetMapping("faq-template")
+    public Mono<FAQConfig> faqStoreTemplateList() {
+        return executeRequestMono(() -> {
+            return FAQStoreTemplate.getCONFIG();
+        });
+    }
+
+}

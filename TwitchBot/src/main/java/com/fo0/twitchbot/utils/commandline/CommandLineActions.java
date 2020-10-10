@@ -9,7 +9,6 @@ import com.fo0.twitchbot.api.cmd.BotAddCmd;
 import com.fo0.twitchbot.api.cmd.UpdateModeCmd;
 import com.fo0.twitchbot.bot.template.ActionDefaultTemplate;
 import com.fo0.twitchbot.bot.template.FAQStoreTemplate;
-import com.fo0.twitchbot.controller.Controller;
 import com.fo0.twitchbot.controller.ControllerTwitchBot;
 import com.fo0.twitchbot.enums.EBotAction;
 import com.fo0.twitchbot.model.TwitchBotAction;
@@ -92,14 +91,15 @@ public class CommandLineActions implements Consumer<String> {
 
 		case "commandline-api-restart":
 			new Thread(() -> {
-				Controller.cmdApi.stop();
-				Utils.sleep(1000);
-				Controller.cmdApi.start();
+//				Controller.cmdApi.stop();
+//				Utils.sleep(1000);
+//				Controller.cmdApi.start();
+			    currentlyNotSupported();
 			}).start();
 			break;
 
 		case "commandline-api-stop":
-			Controller.cmdApi.stop();
+		    currentlyNotSupported();
 			break;
 
 		case "default-mode":
@@ -133,6 +133,15 @@ public class CommandLineActions implements Consumer<String> {
 			break;
 		}
 	}
+
+    /**
+     * 
+     * @Created 10.10.2020 - 23:38:20
+     * @author fo0 (GH:fo0)
+     */
+    private void currentlyNotSupported() {
+        printListener.accept("currently not supported");
+    }
 
 	public void print(String msg) {
 		System.out.println(Utils.getCurrentTime() + " [Console|" + mode + "] " + msg);

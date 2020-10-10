@@ -2,8 +2,6 @@ package com.fo0.twitchbot.spring.config;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.embedded.tomcat.TomcatConnectorCustomizer;
 import org.springframework.boot.web.embedded.tomcat.TomcatContextCustomizer;

@@ -1,5 +1,10 @@
 package com.fo0.twitchbot.controller;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.fo0.twitchbot.api.cmd.CommandlineApi;
 import com.fo0.twitchbot.config.cmd.Config;
 import com.fo0.twitchbot.config.cmd.Configuration;
@@ -8,46 +13,53 @@ import com.fo0.twitchbot.startup.StartUpMessage;
 import com.fo0.twitchbot.utils.AuthFromFile;
 import com.fo0.twitchbot.utils.Logger;
 
+@Service
 public class Controller {
 
-	public static String[] arg;
-	public static Config config = null;
-	public static CommandlineApi cmdApi = null;
+    public static Config config = null;
+    public static CommandlineApi cmdApi = null;
 
-	public static void bootstrap(String[] args) {
-		Logger.debug("starting controller");
+    @Autowired
+    private StartUpMessage startUp;
 
-		arg = args;
+    @Autowired
+    private Configuration configuration;
 
-		StartUpMessage.init();
+    @PostConstruct
+    public void init() {
+        Logger.debug("starting controller");
 
-		Configuration.init();
+        startUp.init();
 
-		modules();
+        configuration.init();
 
-//		addDefaults();
-	}
+        modules();
 
-	public static void preConstruct() {
-		// disable ipv6
-		System.setProperty("java.net.preferIPv4Stack", "true");
-	}
+        // addDefaults();
+    }
 
-	public static void modules() {
-		ControllerSystem.init();
-		ControllerRest.init();
-		ControllerTwitchBot.init();
-	}
+    public void preConstruct() {
+        // disable ipv6
+        System.setProperty("java.net.preferIPv4Stack", "true");
+    }
 
-	public static void enableCommandlineApi() {
-		Logger.info("Starting CommandLineApi");
-		cmdApi = new CommandlineApi();
-	}
+    public void modules() {
+        ControllerSystem.init();
+        ControllerRest.init();
+        ControllerTwitchBot.init();
+    }
 
-	public static void addDefaults() {
-		ControllerTwitchBot.addBot(TwitchBotConfig.builder()
-				.id("fo0mebot").name("fo0mebot")
-				.oauth(AuthFromFile.getTwitchOauthKey())
-				.channel("fo0me").build());
-	}
+    public void enableCommandlineApi() {
+        Logger.info("Starting CommandLineApi");
+        cmdApi = new CommandlineApi();
+    }
+
+    public void addDefaults() {
+        ControllerTwitchBot.addBot(TwitchBotConfig.builder()
+                                                  .id("fo0mebot")
+                                                  .name("fo0mebot")
+                                                  .oauth(AuthFromFile.getTwitchOauthKey())
+                                                  .channel("fo0me")
+                                                  .build());
+    }
 }

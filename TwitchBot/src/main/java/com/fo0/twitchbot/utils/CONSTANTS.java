@@ -1,12 +1,5 @@
 package com.fo0.twitchbot.utils;
 
-import java.util.Set;
-
-import com.fo0.twitchbot.api.rest.ActionTemplateApi;
-import com.fo0.twitchbot.api.rest.BotApi;
-import com.fo0.twitchbot.api.rest.SystemApi;
-import com.google.common.collect.Sets;
-
 public class CONSTANTS {
 
 	public static boolean DEBUG = true;
@@ -30,9 +23,6 @@ public class CONSTANTS {
 	public static final String REST_ADDRESS = "0.0.0.0";
 	public static String REST_API_KEY = null;
 	public static int REST_PORT = 1234;
-	public static final String REST_PACKAGE = "com.fo0.twitchbot.api.rest";
-	public static final Set<Class<?>> REST_CLASSES = Sets.newHashSet(BotApi.class, SystemApi.class, ActionTemplateApi.class);
-
 	public static final String REST_ROOT_PATH = "/api";
 
 	/**

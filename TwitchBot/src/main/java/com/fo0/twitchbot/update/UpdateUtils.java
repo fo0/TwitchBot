@@ -12,7 +12,7 @@ import org.kohsuke.github.GHRelease;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GitHub;
 
-import com.fo0.twitchbot.main.Main;
+import com.fo0.twitchbot.Main;
 import com.fo0.twitchbot.utils.CONSTANTS;
 import com.fo0.twitchbot.utils.Logger;
 import com.fo0.twitchbot.utils.Utils;

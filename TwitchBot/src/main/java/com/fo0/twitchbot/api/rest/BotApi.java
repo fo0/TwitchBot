@@ -15,11 +15,9 @@ import com.fo0.twitchbot.model.TwitchBotConfig;
 import com.google.gson.Gson;
 
 import io.swagger.v3.oas.annotations.Operation;
-import lombok.extern.log4j.Log4j2;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-@Log4j2
 @RestController
 @RequestMapping("bot")
 public class BotApi extends ARestBasicTemplate {

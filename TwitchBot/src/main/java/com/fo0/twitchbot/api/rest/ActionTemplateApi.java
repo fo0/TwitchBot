@@ -11,10 +11,8 @@ import com.fo0.twitchbot.model.BotActionConfig;
 import com.fo0.twitchbot.model.FAQConfig;
 
 import io.swagger.v3.oas.annotations.Operation;
-import lombok.extern.log4j.Log4j2;
 import reactor.core.publisher.Mono;
 
-@Log4j2
 @RestController
 @RequestMapping("template")
 public class ActionTemplateApi extends ARestBasicTemplate {

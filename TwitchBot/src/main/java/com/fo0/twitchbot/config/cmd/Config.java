@@ -14,7 +14,7 @@ public class Config extends OptionsBase {
 	@Option(name = "config", abbrev = 'c', category = "Config", help = "Config-Folder", defaultValue = "config")
 	public String configDir;
 
-	@Option(name = "commandLineApi", abbrev = 'a', category = "Api", help = "Commandline Api", defaultValue = "false")
+	@Option(name = "commandLineApi", abbrev = 'a', category = "Api", help = "Commandline Api", defaultValue = "true")
 	public boolean commandLineApi;
 
 	@Option(name = "apiKey", abbrev = 'k', category = "REST", help = "REST ApiKey", defaultValue = "")

@@ -8,8 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         new SpringApplicationBuilder(Main.class)
-                                                // .properties(null)
-                                                .run(args);
+                // .properties(null)
+                .run(args);
     }
 
 }

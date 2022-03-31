@@ -23,7 +23,7 @@
 		<maven.source.plugin>3.0.1</maven.source.plugin>
 
 		<!-- dependencies -->
-		<spring.version>2.2.6.RELEASE</spring.version>
+		<spring.version>2.5.12</spring.version>
 		<spring.framework.version>5.2.4.RELEASE</spring.framework.version>
 
 		<openapi.version>1.4.4</openapi.version>
